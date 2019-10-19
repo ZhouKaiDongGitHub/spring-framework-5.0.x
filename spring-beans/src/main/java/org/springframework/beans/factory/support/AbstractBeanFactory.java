@@ -239,6 +239,13 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	protected <T> T doGetBean(final String name, @Nullable final Class<T> requiredType,
 			@Nullable final Object[] args, boolean typeCheckOnly) throws BeansException {
 
+		/**
+		 * 通过name获取beanName，而不是直接用name到工厂Map中找的原因有两个：
+		 * 1.name可能会是以&开头的，表明调用者想获取的是FactoryBean本身，而非FactoryBean创建的bean。
+		 * 		在FactoryBean中，FactoryBean的实现类存储方式和其他的Bean是一样的，都是<beanName,bean>,
+		 * 		beanName是没有&这个字符的，所以我们需要在拿到&时候转换一下
+		 * 2.alian别名问题
+		 */
 		final String beanName = transformedBeanName(name);
 		Object bean;
 
