@@ -1,6 +1,5 @@
-package com.luban.beanPostProcessor;
+package com.luban.anno.beanPostProcessor;
 
-import com.luban.service.IndexService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;

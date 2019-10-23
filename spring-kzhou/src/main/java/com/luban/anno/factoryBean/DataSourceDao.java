@@ -1,4 +1,4 @@
-package com.luban.factoryBean;
+package com.luban.anno.factoryBean;
 
 /**
  * 依赖第三方，此第三方bean不需要Spring管理

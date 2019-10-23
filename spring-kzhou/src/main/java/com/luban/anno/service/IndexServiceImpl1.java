@@ -1,6 +1,6 @@
-package com.luban.service;
+package com.luban.anno.service;
 
-import com.luban.dao.IndexDao;
+import com.luban.anno.dao.IndexDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

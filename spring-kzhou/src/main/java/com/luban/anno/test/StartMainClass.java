@@ -1,10 +1,8 @@
-package com.luban.test;
+package com.luban.anno.test;
 
-import com.luban.config.AppConfig;
-import com.luban.factoryBean.DataSourceFactoryBean;
-import com.luban.service.IndexService;
+import com.luban.anno.config.AppConfig;
+import com.luban.anno.service.IndexService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class StartMainClass {
 

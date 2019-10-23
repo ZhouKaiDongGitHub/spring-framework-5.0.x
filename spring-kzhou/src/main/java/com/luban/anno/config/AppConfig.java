@@ -1,4 +1,4 @@
-package com.luban.config;
+package com.luban.anno.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

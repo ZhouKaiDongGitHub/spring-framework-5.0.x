@@ -1,4 +1,4 @@
-package com.luban.factoryBean;
+package com.luban.anno.factoryBean;
 
 /**
  * 第三方类

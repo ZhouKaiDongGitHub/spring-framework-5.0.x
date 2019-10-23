@@ -1,4 +1,4 @@
-package com.luban.dao;
+package com.luban.anno.dao;
 
 import org.springframework.stereotype.Repository;
 

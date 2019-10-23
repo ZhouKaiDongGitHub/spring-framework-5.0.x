@@ -1,4 +1,4 @@
-package com.luban.factoryBean;
+package com.luban.anno.factoryBean;
 
 import org.springframework.beans.factory.FactoryBean;
 
