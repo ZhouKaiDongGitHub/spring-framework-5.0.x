@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
 
+/**
+ * Spring提供的扩展点之一：可以对beanFactory中生成的beanDefinitionMap进行操作
+ * 例如：ConfigurationClassPostProcessor，就是对所有的beanFactory中的beanDifinition是annotedBeanDifinition并且
+ * 		 加上@Configuration的类进行操作，解析上面的注解等等
+ */
 @Component
 public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
 	@Override
