@@ -488,7 +488,7 @@ public class ConfigurationClassProcessingTests {
 			return new BeanFactoryPostProcessor() {
 				@Override
 				public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
-					BeanDefinition bd = beanFactory.getBeanDefinition("beanPostProcessor");
+					BeanDefinition bd = beanFactory.getBeanDefinition("beanFactoryPostProcessor");
 					bd.getPropertyValues().addPropertyValue("nameSuffix", "-processed-" + myProp);
 				}
 			};

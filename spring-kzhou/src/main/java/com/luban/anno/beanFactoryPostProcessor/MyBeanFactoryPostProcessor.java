@@ -1,4 +1,4 @@
-package com.luban.anno.beanPostProcessor;
+package com.luban.anno.beanFactoryPostProcessor;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -17,7 +17,7 @@ import java.util.Iterator;
 public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		System.out.println("调用了自定义的BeanFactoryPostProcessor " + beanFactory);
+		System.out.println("调用了自定义的BeanFactoryPostProcessor ");
 		Iterator it = beanFactory.getBeanNamesIterator();
 
 		String[] names = beanFactory.getBeanDefinitionNames();
