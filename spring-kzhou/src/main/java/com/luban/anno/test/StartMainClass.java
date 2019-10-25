@@ -37,5 +37,9 @@ public class StartMainClass {
 		//ImportSelector
 		/*Dao dao = (Dao)context.getBean("daoImpl");
 		dao.query();*/
+
+		//ProxyAppconfig
+		AppConfig appConfig = (AppConfig) context.getBean("appConfig");
+		appConfig.test();
 	}
 }

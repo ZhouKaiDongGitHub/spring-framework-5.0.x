@@ -240,6 +240,10 @@ class ConfigurationClassParser {
 		}
 
 		// Recursively process the configuration class and its superclass hierarchy.
+		//1. 这边处理的是所有自注册的类 例如 register（IndexDao.class）或register（AppConfig.class）
+		//   只要这个类上面加了注解@Configuration或@Component
+		//2. 但是这个递归调用方法会在处理@ComponentScan处理所有scan中类会再次调用这个方法
+		//	 直到处理完所有的包中类，才会结束这个调用
 		SourceClass sourceClass = asSourceClass(configClass);
 		do {
 			sourceClass = doProcessConfigurationClass(configClass, sourceClass);
