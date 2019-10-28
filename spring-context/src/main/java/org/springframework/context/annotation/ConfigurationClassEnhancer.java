@@ -107,6 +107,7 @@ class ConfigurationClassEnhancer {
 			}
 			return configClass;
 		}
+		//传入被代理类和类加载器
 		Class<?> enhancedClass = createClass(newEnhancer(configClass, classLoader));
 		if (logger.isDebugEnabled()) {
 			logger.debug(String.format("Successfully enhanced %s; enhanced class name is: %s",
@@ -119,12 +120,18 @@ class ConfigurationClassEnhancer {
 	 * Creates a new CGLIB {@link Enhancer} instance.
 	 */
 	private Enhancer newEnhancer(Class<?> configSuperClass, @Nullable ClassLoader classLoader) {
+		//创建一个Cgli代理类过程
+		//Step1:传入需要代理类
 		Enhancer enhancer = new Enhancer();
 		enhancer.setSuperclass(configSuperClass);
+		//Step2:(可省略)代理类加上注解 EnhancedConfiguration extends BeanFactoryAware 可以在运行时拿到beanFactory环境
 		enhancer.setInterfaces(new Class<?>[] {EnhancedConfiguration.class});
 		enhancer.setUseFactory(false);
 		enhancer.setNamingPolicy(SpringNamingPolicy.INSTANCE);
+		//Step3:(可省略)表明代理类生成的一个属性，这边是BeanFactory
 		enhancer.setStrategy(new BeanFactoryAwareGeneratorStrategy(classLoader));
+		//Step4:设置回调方法，也就是代理逻辑 enhancer.setCallback(new MyMethodIntercepor());
+		//setCallbackFilter是对setCallback的升级。设置拦截器ConditionalCallbackFilter CALLBACK_FILTER
 		enhancer.setCallbackFilter(CALLBACK_FILTER);
 		enhancer.setCallbackTypes(CALLBACK_FILTER.getCallbackTypes());
 		return enhancer;
