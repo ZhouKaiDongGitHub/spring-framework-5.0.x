@@ -25,7 +25,7 @@ public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
 		for(int i=0; i<names.length; i++){
 			String name = names[i];
 			BeanDefinition bd = beanFactory.getBeanDefinition(name);
-			System.out.println(name + " bean properties: " + bd.getPropertyValues().toString());
+			//System.out.println(name + " bean properties: " + bd.getPropertyValues().toString());
 			// 本内容只是个demo，打印持有的bean的属性情况
 		}
 	}

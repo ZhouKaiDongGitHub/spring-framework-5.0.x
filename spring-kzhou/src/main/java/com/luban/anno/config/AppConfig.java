@@ -5,13 +5,11 @@ import com.luban.anno.importSelect.EnableEureka;
 import com.luban.anno.importSelect.MyImportSelect;
 import com.luban.anno.proxyConfiguration.CostDaoImpl;
 import com.luban.anno.proxyConfiguration.OrderDaoImpl;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
 
 @Configuration
 @ComponentScan("com.luban")
+@EnableAspectJAutoProxy
 @Import({MyImportBeanFactoryRegiste.class})
 @EnableEureka
 public class AppConfig {
@@ -25,5 +23,4 @@ public class AppConfig {
 		orderDaoImpl1();
 		return new CostDaoImpl();
 	}
-	public void test(){ }
 }

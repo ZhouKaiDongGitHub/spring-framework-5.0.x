@@ -1,5 +1,6 @@
 package com.luban.anno.test;
 
+import com.luban.anno.aop.TargetProgrome;
 import com.luban.anno.config.AppConfig;
 import com.luban.anno.dao.PowerDao;
 import com.luban.anno.factoryBean.DataSourceFactoryBean;
@@ -39,7 +40,9 @@ public class StartMainClass {
 		dao.query();*/
 
 		//ProxyAppconfig
-		AppConfig appConfig = (AppConfig) context.getBean("appConfig");
-		appConfig.test();
+		//AppConfig appConfig = (AppConfig) context.getBean("appConfig");
+		TargetProgrome targetProgrome = (TargetProgrome) context.getBean("targetProgrome");
+		targetProgrome.query();
+
 	}
 }
