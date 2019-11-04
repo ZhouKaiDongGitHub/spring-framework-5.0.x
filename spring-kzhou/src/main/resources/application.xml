@@ -4,11 +4,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-	<import resource="application-extend.xml"/>
+	<!--<import resource="application-extend.xml"/>-->
 
-	<bean id="indexDaoImpl1" class="com.luban.xml.dao.IndexDaoImpl1"></bean>
+	<bean id="indexDaoImpl2" class="com.luban.xml.dao.IndexDaoImpl1"></bean>
+	<bean id="indexDaoImpl1" class="com.luban.xml.dao.IndexDaoImpl2"></bean>
 
-	<bean id="indexServiceImpl1" class="com.luban.xml.service.IndexServiceImpl1">
+	<bean id="indexServiceImpl1" class="com.luban.xml.service.IndexServiceImpl1" autowire="byType">
 		<property name="dao" ref="indexDaoImpl1"></property>
 	</bean>
 

@@ -2,12 +2,14 @@ package com.luban.anno.test;
 
 import com.luban.anno.aop.TargetProgrome;
 import com.luban.anno.config.AppConfig;
+import com.luban.anno.dao.IndexDao;
 import com.luban.anno.dao.PowerDao;
 import com.luban.anno.factoryBean.DataSourceFactoryBean;
 import com.luban.anno.importSelect.Dao;
 import com.luban.anno.importSelect.DaoImpl;
 import com.luban.anno.importSelect.ImportSelectIndexDao;
 import com.luban.anno.service.IndexService;
+import org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -27,7 +29,6 @@ public class StartMainClass {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 		context.register(AppConfig.class);
 		context.refresh();
-
 		//BeanFactoryPostProcessor
 		//context.addBeanFactoryPostProcessor(new MyBeanFactoryPostProcessor());
 
@@ -41,8 +42,12 @@ public class StartMainClass {
 
 		//ProxyAppconfig
 		//AppConfig appConfig = (AppConfig) context.getBean("appConfig");
-		TargetProgrome targetProgrome = (TargetProgrome) context.getBean("targetProgrome");
-		targetProgrome.query();
+		/*TargetProgrome targetProgrome = (TargetProgrome) context.getBean("targetProgrome");
+		targetProgrome.query();*/
+
+
+		IndexService indexServiceImpl1 = (IndexService) context.getBean("indexServiceImpl1");
+		System.out.println(indexServiceImpl1.getNameById("kzhou"));
 
 	}
 }

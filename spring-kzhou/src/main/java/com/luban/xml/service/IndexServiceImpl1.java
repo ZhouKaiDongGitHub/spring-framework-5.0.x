@@ -6,9 +6,9 @@ public class IndexServiceImpl1 implements IndexService {
 
 	private IndexDao dao;
 
-	public IndexDao getDao() {
+	/*public IndexDao getDao() {
 		return dao;
-	}
+	}*/
 
 	@Override
 	public void query() {

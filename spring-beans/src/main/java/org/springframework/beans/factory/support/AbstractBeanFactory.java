@@ -250,6 +250,13 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		Object bean;
 
 		// Eagerly check singleton cache for manually registered singletons.
+		/**
+		 * 看是否已经在singltonObjects中了，有些类的对象已经在里面了
+		 * 两个地方进去这个方法：
+		 * 1.初始化的时候，那个时候普通对象肯定是没有值的，需要进去下面初始化流程
+		 * 2.context.getBean()的时候，那个时候对于普通对象这边就有值了，直接返回
+		 * 当然对于已经在singltonObjects中的对象，不管初始化也好，后面你想调用也好，都是有值的
+		 */
 		Object sharedInstance = getSingleton(beanName);
 		if (sharedInstance != null && args == null) {
 			if (logger.isDebugEnabled()) {

@@ -4,10 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-	<bean id="indexServiceImpl2" class="com.luban.xml.service.IndexServiceImpl2">
-		<!--<property name="dao" ref="indexDaoImpl1"></property>-->
+	<!--<bean id="indexServiceImpl2" class="com.luban.xml.service.IndexServiceImpl2">
+		&lt;!&ndash;<property name="dao" ref="indexDaoImpl1"></property>&ndash;&gt;
 	</bean>
 
-	<alias name="indexServiceImpl2" alias="indexServiceImpl1"></alias>
+	<alias name="indexServiceImpl2" alias="indexServiceImpl1"></alias>-->
 
 </beans>
