@@ -9,14 +9,14 @@
 	<bean id="indexDaoImpl2" class="com.luban.dao.IndexDaoImpl2"></bean>
 	<!--<bean id="indexDaoImpl1" class="com.luban.dao.IndexDaoImpl1"></bean>-->
 
-	<bean id="indexServiceImpl1" class="com.luban.service.IndexServiceImpl1" autowire="byType">
-		<!--<property name="indexDao" ref="indexDaoImpl1"/>
-		<property name="name" value="kzhou"/>-->
-	</bean>
-
-	<!--<bean id="indexServiceImpl1" class="com.luban.service.IndexServiceImpl1">
-		<constructor-arg ref="indexDaoImpl1"/>
-		<constructor-arg value="kzhou"/>
+	<!--<bean id="indexServiceImpl1" class="com.luban.service.IndexServiceImpl1" autowire="byType">
+		&lt;!&ndash;<property name="indexDao" ref="indexDaoImpl1"/>
+		<property name="name" value="kzhou"/>&ndash;&gt;
 	</bean>-->
+
+	<bean id="indexServiceImpl1" class="com.luban.service.IndexServiceImpl1">
+		<constructor-arg ref="indexDaoImpl2"/>
+		<constructor-arg value="kzhou"/>
+	</bean>
 
 </beans>

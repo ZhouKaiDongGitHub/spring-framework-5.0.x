@@ -11,6 +11,7 @@ public class IndexServiceImpl1 implements  IndexService {
 	@Autowired
 	private IndexDao indexDao;
 
+
 	@Value("test")
 	private String test;
 

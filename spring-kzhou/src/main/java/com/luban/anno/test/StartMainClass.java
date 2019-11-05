@@ -9,6 +9,7 @@ import com.luban.anno.importSelect.Dao;
 import com.luban.anno.importSelect.DaoImpl;
 import com.luban.anno.importSelect.ImportSelectIndexDao;
 import com.luban.anno.service.IndexService;
+import com.luban.anno.service.StudentServiceImpl;
 import org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -46,8 +47,8 @@ public class StartMainClass {
 		targetProgrome.query();*/
 
 
-		IndexService indexServiceImpl1 = (IndexService) context.getBean("indexServiceImpl1");
-		System.out.println(indexServiceImpl1.getNameById("kzhou"));
+		StudentServiceImpl indexServiceImpl1 = (StudentServiceImpl) context.getBean("studentServiceImpl");
+		indexServiceImpl1.print();
 
 	}
 }

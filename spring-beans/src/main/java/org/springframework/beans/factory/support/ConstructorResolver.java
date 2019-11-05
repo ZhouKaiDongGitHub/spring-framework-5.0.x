@@ -113,7 +113,12 @@ class ConstructorResolver {
 
 		BeanWrapperImpl bw = new BeanWrapperImpl();
 		this.beanFactory.initBeanWrapper(bw);
-
+		/**
+		 * 需要三个东西，才能通过有参构造生成对象
+		 * 1.Constructor
+		 * 2.ParameterTypes
+		 * 3.ParameterNames
+		 */
 		Constructor<?> constructorToUse = null;
 		ArgumentsHolder argsHolderToUse = null;
 		Object[] argsToUse = null;
@@ -721,6 +726,7 @@ class ConstructorResolver {
 							"] - did you specify the correct bean references as arguments?");
 				}
 				try {
+					//采用自动参数注入，找到参数的实现类，然后反射实例化出来
 					Object autowiredArgument =
 							resolveAutowiredArgument(methodParam, beanName, autowiredBeanNames, converter);
 					args.rawArguments[paramIndex] = autowiredArgument;
