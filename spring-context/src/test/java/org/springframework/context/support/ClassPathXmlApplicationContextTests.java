@@ -74,6 +74,7 @@ public class ClassPathXmlApplicationContextTests {
 
 	@Test
 	public void testSingleConfigLocation() {
+		//org/springframework/context/support/simpleContext.xml
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(FQ_SIMPLE_CONTEXT);
 		assertTrue(ctx.containsBean("someMessageSource"));
 		ctx.close();
@@ -81,6 +82,7 @@ public class ClassPathXmlApplicationContextTests {
 
 	@Test
 	public void testMultipleConfigLocations() {
+		//test/contextA.xml   test/contextB.xml   test/contextC.xml
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
 				FQ_CONTEXT_B, FQ_CONTEXT_C, FQ_CONTEXT_A);
 		assertTrue(ctx.containsBean("service"));
