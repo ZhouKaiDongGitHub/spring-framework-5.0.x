@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!--Aware-->
+	<bean id="myAware" class="com.review.hook.aware.MyAware"/>
+	<bean id="testOne" class="com.review.hook.aware.TestClassOne"/>
+
+	<bean id="mySource" class="com.review.hook.MySource">
+		<property name="temperature" value="30"/>
+		<property name="humidity" value="20"/>
+		<property name="atmos" value="80"/>
+	</bean>
+	<bean id="myApplicationEvent" class="com.review.hook.MyApplicationEvent">
+		<constructor-arg ref="mySource"/>
+	</bean>
+	<bean id="myApplicationListener" class="com.review.hook.MyApplicationListener"/>
+
+	<!--spring解决循环依赖用了三级缓存 -->
+	<!---单例bean在实例化instance分为三步1.createInstance根据构造方法产生初步对象 2.populateBean属性填充 3.initialBean调用init方法后置处理
+		 解决循环依赖就是在第一步和第二步间完成的。sping在beanFactory中有三个缓存map：
+		 singltonObjects 存储完全实例化好的对象
+		 earlySingltonObjects singltonFactories的后备对象
+		 singltonFactories 存储构造方法构造出来但是没有属性填充的对象
+		 例如：A ->B  B->C C->A spring先对A进行对象创建，根据BeanDifinition信息中构造方法信息进行反射生成初始对象，存在singltonFactories.然后第二步发现A->B.
+		 进行B的构造，放入singltonFactories.然后第二步发现B->C.进行C的构造，放入singltonFactories.
+		 然后发现C->A.就去getSinglton(A),singltonObjects当然没有，earlySingltonObjects也没有，singltonFactories中有A的信息，把A的引用给C，将singltonFactories中A拿到earlySingltonObjects中。完成C的创建，放到singltonObjects
+		 返回到B的创建，在返回到A的创建，至此完成了循环依赖-->
+</beans>
