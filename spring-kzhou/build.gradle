@@ -13,6 +13,8 @@ repositories {
 
 dependencies {
     compile(project(":spring-context"))
+    compile(project(":spring-aop"))
+    compile(project(":spring-aspects"))
     //optional("org.aspectj:aspectjweaver:${aspectjVersion}")
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
