@@ -31,4 +31,5 @@ rootProject.children.each {project ->
 }
 include 'spring-luban'
 include 'spring-kzhou'
+include 'spring-luban2'
 

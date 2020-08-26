@@ -41,7 +41,9 @@ class AspectJAutoProxyRegistrar implements ImportBeanDefinitionRegistrar {
 	@Override
 	public void registerBeanDefinitions(
 			AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-
+		//这边会注入一个后置处理器，用来处理关于aspect的注解，没有这个处理器，那么所有的Aspect注解将会失效，不被解析
+		//当然，如果你是XML的编码风格，那么后置处理器的名字就不是这个了 叫做AspectJAwareAutoProxyCreator
+		//名称叫做AnnotationAwareAspectJAutoProxyCreator，可以称为AspectJAutoProxyCreator
 		AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(registry);
 
 		AnnotationAttributes enableAspectJAutoProxy =
