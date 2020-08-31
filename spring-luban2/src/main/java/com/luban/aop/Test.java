@@ -2,6 +2,7 @@ package com.luban.aop;
 
 import com.luban.aop.config.AppConfig;
 
+import com.luban.aop.demo.ovveride.method.BTest;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ConfigurationClassPostProcessor;
@@ -21,5 +22,11 @@ public class Test {
 		//     	如果获取不到，就先调用getObject方法生成一个对象给下次调用
 		Object object = context.getBean("myFactoryBean");
 		Object objects = context.getBean("&myFactoryBean");
+
+		System.out.println(context.getBean("userService"));
+
+		//lookup-method和 replace-method
+		System.out.println(context.getBean(BTest.class).getA().hashCode());
+		System.out.println(context.getBean(BTest.class).getA().hashCode());
 	}
 }

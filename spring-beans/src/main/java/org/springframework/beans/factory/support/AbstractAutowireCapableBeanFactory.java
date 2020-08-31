@@ -545,6 +545,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			/**
 			 * create beanInstance and instanceWrapper
 			 * 创建beanInstance和instance的包装类
+			 * 如何利用BeanDefinition通过构造方法创建出一个实例对象？
+			 * 	Class class = Class.forName(XXX.xx);
+			 * 	Object object = class.newInstance;
 			 */
 			instanceWrapper = createBeanInstance(beanName, mbd, args);
 		}
@@ -1109,6 +1112,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		// FactoryMethod（）实例创建
+		// FactoryMethod方法直接执行方法，返回一个对象。
+		// @Bean方法中当方法是static时候会mdb.setFactoryMethodName(methodName)也是通过执行方法来返回一个实例对象。
+		// @Bean方法中不是静态的时候，还是会走实例化过程
 		if (mbd.getFactoryMethodName() != null) {
 			return instantiateUsingFactoryMethod(beanName, mbd, args);
 		}
@@ -1134,7 +1140,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		// Candidate constructors for autowiring?
-		// 有参构造方法实例对象
+		// 有参构造方法实例对象。有参体现在两个地方：1.XML中必须指定配置了constructor属性 2.注解方式中惟一的一个有参构造或者加了@Autowired的构造
 		Constructor<?>[] ctors = determineConstructorsFromBeanPostProcessors(beanClass, beanName);
 		if (ctors != null || mbd.getResolvedAutowireMode() == AUTOWIRE_CONSTRUCTOR ||
 				mbd.hasConstructorArgumentValues() || !ObjectUtils.isEmpty(args)) {
