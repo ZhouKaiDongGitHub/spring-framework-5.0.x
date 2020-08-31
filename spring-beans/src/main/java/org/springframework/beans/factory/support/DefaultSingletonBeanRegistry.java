@@ -202,12 +202,16 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	 * @param singletonFactory the ObjectFactory to lazily create the singleton
 	 * with, if necessary
 	 * @return the registered singleton object
+	 *
+	 * 处理特殊的循环依赖的情况
 	 */
 	public Object getSingleton(String beanName, ObjectFactory<?> singletonFactory) {
 		Assert.notNull(beanName, "Bean name must not be null");
 		synchronized (this.singletonObjects) {
+			//1.先到singletonObjects中拿
 			Object singletonObject = this.singletonObjects.get(beanName);
 			if (singletonObject == null) {
+				//如果是构造方法循环依赖，对不起，没法创建，返回Exception
 				if (this.singletonsCurrentlyInDestruction) {
 					throw new BeanCreationNotAllowedException(beanName,
 							"Singleton bean creation not allowed while singletons of this factory are in destruction " +
@@ -223,6 +227,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 					this.suppressedExceptions = new LinkedHashSet<>();
 				}
 				try {
+					//2. 到singletonFactory中去拿
 					singletonObject = singletonFactory.getObject();
 					newSingleton = true;
 				}
@@ -248,6 +253,11 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 					}
 					afterSingletonCreation(beanName);
 				}
+				//当实例化结束之后：
+				//          this.singletonObjects.put(beanName, singletonObject);
+				//			this.singletonFactories.remove(beanName);
+				//			this.earlySingletonObjects.remove(beanName);
+				//			this.registeredSingletons.add(beanName);
 				if (newSingleton) {
 					addSingleton(beanName, singletonObject);
 				}

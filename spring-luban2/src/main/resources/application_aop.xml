@@ -6,15 +6,15 @@
 							http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
-	<bean id="aopPreograme" class="com.luban.aop.demo.AopPrograme"/>
-	<bean id="targetPrograme" class="com.luban.aop.demo.AopService"/>
+	<!--<bean id="aopPreograme" class="com.luban.aop.demo.AopPrograme"/>
+	<bean id="targetPrograme" class="com.luban.aop.demo.AopService"/>-->
 
-	<aop:config>
+	<!--<aop:config>
 
 		<aop:aspect id="aspect1" ref="aopPreograme">
 			<aop:pointcut id="pointcut1" expression="execution(* com.luban.aop.demo.AopService.testAop())"/>
 			<aop:around method="programe" pointcut-ref="pointcut1"/>
 		</aop:aspect>
 
-	</aop:config>
+	</aop:config>-->
 </beans>

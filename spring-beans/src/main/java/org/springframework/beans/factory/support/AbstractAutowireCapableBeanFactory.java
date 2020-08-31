@@ -451,6 +451,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	 * Central method of this class: creates a bean instance,
 	 * populates the bean instance, applies post-processors, etc.
 	 * @see #doCreateBean
+	 * 1、 instance()
+	 * 2、 populate()
+	 * 3、 involePostProcessor
 	 */
 	@Override
 	protected Object createBean(String beanName, RootBeanDefinition mbd, @Nullable Object[] args)
@@ -472,6 +475,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		// Prepare method overrides.
 		// 处理lookUp-method和replace-method
+		// 由于lookUp-method和replace-method比较特殊，需要特别处理
 		try {
 			mbdToUse.prepareMethodOverrides();
 		}
@@ -482,6 +486,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		try {
 			// Give BeanPostProcessors a chance to return a proxy instead of the target bean instance.
+			// 这个后置处理很难理解，因为这个时候对象还没有生成，而我们所谓的后置处理器BeanPostProcessor是对生成后的bean进行处理的
+			// 这个后置处理器是过滤bean,不用spring进行处理，而是我自己实例化和属性填充，并且可以类似的有前置和后置。
+			// Component需要实现InstantiationAwareBeanPostProcessor接口
 			Object bean = resolveBeforeInstantiation(beanName, mbdToUse);
 			if (bean != null) {
 				return bean;

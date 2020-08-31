@@ -845,6 +845,21 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	/**
 	 * Finish the initialization of this context's bean factory,
 	 * initializing all remaining singleton beans.
+	 * 这个方法的核心三个方法是
+	 * 	1. instanceBean()
+	 * 	2. populate()
+	 * 	3. invokeBeanPostProcessor()  before init after
+	 * 这边在instance的核心功能是如何实例化对象以及如何参数化构造实例化对象
+	 * populate关注一下循环依赖，通过了singltonObjects,singltonFactory,earlySinltonObjects三个缓存来实现的
+	 * 		A  →  B
+	 * 		 ↘   ↙
+	 * 			C
+	 * 		当加载A的时候，将A加入到singltonFactory中去，然后在populate时候，发现依赖了B,就去getBean(B)
+	 * 		getBean没有找到B,到earlySinltonObjects中找，也没有找到，然后就到singltonFactory找，这个肯定是可以找到的，因为每一个getBean都会先加到singltonFactory
+	 * 		中去，这样A就会加载了出来，然后加载B的时候，同样的会获取到C的早期对象，C可以直接获取A的完整对象。这样ABC都可以实例化出来
+	 * invokebeanPostProcessor，	主要关注两点 1是里面会有一些明星后置处理器，2是后置处理的postProcessor和init的顺序
+	 * 		明星后置处理器是AutoProxyCreator,他会处理所有的切面和切点程序，生成一个代理对象
+	 * 		postProcessor是针对每一个bean，在init的方法前后进行调用
 	 */
 	protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
 		// Initialize conversion service for this context.
@@ -874,6 +889,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		beanFactory.freezeConfiguration();
 
 		// Instantiate all remaining (non-lazy-init) singletons.
+		//所有非懒加载的对象都会预实例化
 		beanFactory.preInstantiateSingletons();
 	}
 

@@ -110,6 +110,13 @@ import org.springframework.util.StringUtils;
  * @see #addBeanPostProcessor
  * @see #getBean
  * @see #resolveDependency
+ *
+ * BeanFactory的核心实现类DefaultListableBeanFactory，context的核心委托类，context在他的基础上增加了
+ * ApplicationListener事件机制，国际化，环境参数等等功能
+ * DefaultListableBeanFactory实现了两个接口，主要有两个功能
+ * 			FactoryBean管理bean
+ * 			BeanDiefinationRegistry注册beanDefination
+ * 因此spring提供了除了import的一个额外扩展点BeanDefinationRegistryPostProcessor扩展点
  */
 @SuppressWarnings("serial")
 public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory
@@ -732,9 +739,12 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 		// 触发所有非延迟加载的bean
 		for (String beanName : beanNames) {
 			//合并父类BeanDifinition
+			//主要处理xml中的标签parent属性，用来填充父bean的所有属性，只能在XML中使用，springBoot不用了。作用域，属性都和parent一样
 			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
+			//非抽象类，单例的，非懒加载的bean实例化到singltonObjects中
 			if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
 				if (isFactoryBean(beanName)) {
+					//如果是FactoryBean,还是需要加上且的，上面拿掉的目的是为了alias标签
 					Object bean = getBean(FACTORY_BEAN_PREFIX + beanName);
 					if (bean instanceof FactoryBean) {
 						final FactoryBean<?> factory = (FactoryBean<?>) bean;
@@ -754,6 +764,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 					}
 				}
 				else {
+					//无论是不是FactoryBean都是会走到这个getBean方法的，不同的是加不加上&
 					getBean(beanName);
 				}
 			}
