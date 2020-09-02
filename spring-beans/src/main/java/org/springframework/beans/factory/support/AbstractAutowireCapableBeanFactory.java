@@ -587,8 +587,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		Object exposedObject = bean;
 		try {
 			//属性填充
+			//属性填充也是通过两个大名鼎鼎的后置处理器来完成的，一个是common  一个是autowired 分别用来处理@Resource @Autowired
 			populateBean(beanName, mbd, instanceWrapper);
 			//后置处理
+			//后置处理主要有一个大名鼎鼎的处理器 AutoProxyCreator，aop后置处理，用来给目标对象生成一个带有切面程序的代理对象。
 			exposedObject = initializeBean(beanName, exposedObject, mbd);
 		}
 		catch (Throwable ex) {
@@ -1717,6 +1719,11 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	 * @see #applyBeanPostProcessorsBeforeInitialization
 	 * @see #invokeInitMethods
 	 * @see #applyBeanPostProcessorsAfterInitialization
+	 *
+	 * 所有的beanPostProcessor处理每一个bean，经过三个步骤，返回一个wrappedBean
+	 * 1. 后置处理器的before方法
+	 * 2. init回调方法
+	 * 3. 后置处理器的after方法
 	 */
 	protected Object initializeBean(final String beanName, final Object bean, @Nullable RootBeanDefinition mbd) {
 		if (System.getSecurityManager() != null) {

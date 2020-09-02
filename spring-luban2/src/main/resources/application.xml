@@ -11,6 +11,11 @@
 	<bean id="aclass" class="com.luban.aop.demo.instance.Aclass"/>
 
 
-	<bean id="xmlAutowiredA" class="com.luban.aop.demo.autowired.XMLAutowiredA"/>
+	<bean id="xmlAutowiredA" class="com.luban.aop.demo.autowired.XMLAutowiredA">
+		<constructor-arg index="0" value="000"/>
+		<constructor-arg index="1" value="001"/>
+		<constructor-arg index="2" value="002"/>
+	</bean>
 	<bean id="xmlAutowiredB" class="com.luban.aop.demo.autowired.XMLAutowiredB" autowire="byType"/>
+
 </beans>
