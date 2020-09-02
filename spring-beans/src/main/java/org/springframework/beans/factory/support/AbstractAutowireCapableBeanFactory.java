@@ -1141,6 +1141,15 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		// Candidate constructors for autowiring?
 		// 有参构造方法实例对象。有参体现在两个地方：1.XML中必须指定配置了constructor属性 2.注解方式中惟一的一个有参构造或者加了@Autowired的构造
+		/**
+		 * AUTOWIRE_CONSTRUCTOR 关于这个参数的理解：
+		 * 首先自动装配是一种思想：实现的方式可以是XML或者Annotation。可以ByType可以ByName。实现的策略可以是通过set方法调用，也可以是反射属性赋值。
+		 * Spring中默认对所有的BeanDefinition采用的是AUTOWIRE_NO表示不使用自动装配。
+		 * 当在Spring的XML中设置了bean属性为AUTOWIRE_TYPE或者AUTOWIRE_NAME或者AUTOWIRE_CONSTRUCTOR时候，这边改变，在populate属性的时候，
+		 * 			会通过调用set方法将属性注入,如果没有set方法或者set方法里面没有做赋值事情，那么要么报错要么没有注入成功
+		 * 当在SPring中属性上面添加注解的时候，在populate属性的时候，会直接反射属性赋值，而不需要通过set方法。
+		 *
+		 */
 		Constructor<?>[] ctors = determineConstructorsFromBeanPostProcessors(beanClass, beanName);
 		if (ctors != null || mbd.getResolvedAutowireMode() == AUTOWIRE_CONSTRUCTOR ||
 				mbd.hasConstructorArgumentValues() || !ObjectUtils.isEmpty(args)) {
@@ -1297,6 +1306,12 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	 * @param beanName the name of the bean
 	 * @param mbd the bean definition for the bean
 	 * @param bw the BeanWrapper with bean instance
+	 *
+	 *           这边再强调一个mbd这个BeanDefinition的功能，是对一个bean的所有描述。包括
+	 *           1. bean的属性 name className scope lazy depandsOn parent factory-method
+	 *           2. class的所有信息 属性 方法（get  set等所有） 接口，注解信息等等
+	 *           他描述的信息足够实例化需要的所有情况
+	 *
 	 */
 	protected void populateBean(String beanName, RootBeanDefinition mbd, @Nullable BeanWrapper bw) {
 		if (bw == null) {

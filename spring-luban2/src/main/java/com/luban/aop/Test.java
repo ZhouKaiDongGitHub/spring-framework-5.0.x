@@ -2,6 +2,7 @@ package com.luban.aop;
 
 import com.luban.aop.config.AppConfig;
 
+import com.luban.aop.demo.autowired.XMLAutowiredB;
 import com.luban.aop.demo.ovveride.method.BTest;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -28,5 +29,8 @@ public class Test {
 		//lookup-method和 replace-method
 		System.out.println(context.getBean(BTest.class).getA().hashCode());
 		System.out.println(context.getBean(BTest.class).getA().hashCode());
+
+		//
+		context.getBean(XMLAutowiredB.class).getA();
 	}
 }

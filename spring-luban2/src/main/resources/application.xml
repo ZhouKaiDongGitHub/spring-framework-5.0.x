@@ -10,4 +10,7 @@
 
 	<bean id="aclass" class="com.luban.aop.demo.instance.Aclass"/>
 
+
+	<bean id="xmlAutowiredA" class="com.luban.aop.demo.autowired.XMLAutowiredA"/>
+	<bean id="xmlAutowiredB" class="com.luban.aop.demo.autowired.XMLAutowiredB" autowire="byType"/>
 </beans>
