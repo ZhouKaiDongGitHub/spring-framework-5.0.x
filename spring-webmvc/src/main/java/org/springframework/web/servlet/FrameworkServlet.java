@@ -206,6 +206,9 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	private boolean dispatchTraceRequest = false;
 
 	/** WebApplicationContext for this servlet */
+	/**
+	 * DispatcherServlet持有的applicationContext核心对象
+	 */
 	@Nullable
 	private WebApplicationContext webApplicationContext;
 

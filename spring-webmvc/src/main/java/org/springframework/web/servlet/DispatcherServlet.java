@@ -319,6 +319,9 @@ public class DispatcherServlet extends FrameworkServlet {
 	private ThemeResolver themeResolver;
 
 	/** List of HandlerMappings used by this servlet */
+	/**
+	 * tomcat这样的servlet容器考虑的很全面，它不仅仅支持springmvc也支持Struts2甚至一个简单的RequestMapping
+	 */
 	@Nullable
 	private List<HandlerMapping> handlerMappings;
 
@@ -886,6 +889,8 @@ public class DispatcherServlet extends FrameworkServlet {
 	/**
 	 * Exposes the DispatcherServlet-specific request attributes and delegates to {@link #doDispatch}
 	 * for the actual dispatching.
+	 *
+	 *这个方法是从HttpServlet的doGet()方法一步步调用进来的，也是SpringMVC的核心方法
 	 */
 	@Override
 	protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -925,6 +930,7 @@ public class DispatcherServlet extends FrameworkServlet {
 		}
 
 		try {
+			//核心方法，请求转发
 			doDispatch(request, response);
 		}
 		finally {
@@ -974,6 +980,7 @@ public class DispatcherServlet extends FrameworkServlet {
 
 				// Determine handler adapter for the current request.
 				//根据不同的handler用不同的适配器进行处理
+				//不同的handler交给不同的HandlerAdapter处理，HandlerAdapter就是一个Handler，只是用了适配器模式
 				HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
 
 				// Process last-modified header, if supported by the handler.
@@ -989,6 +996,7 @@ public class DispatcherServlet extends FrameworkServlet {
 					}
 				}
 
+				//前置拦截处理
 				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
 					return;
 				}
@@ -1182,6 +1190,7 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * <p>Tries all handler mappings in order.
 	 * @param request current HTTP request
 	 * @return the HandlerExecutionChain, or {@code null} if no handler could be found
+	 *
 	 */
 	@Nullable
 	protected HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception {
@@ -1191,6 +1200,9 @@ public class DispatcherServlet extends FrameworkServlet {
 					logger.trace(
 							"Testing handler map [" + hm + "] in DispatcherServlet with name '" + getServletName() + "'");
 				}
+				//handlerMapping肯定是一个map结构，这是毋庸置疑的，存放的是路径和handler对象
+				//那么为什么不直接返回一个handler,而返回一个HandlerExecutionChain呢？为了返回与index对应的intercept，intercept是和HandleMapping挂钩的
+				//而HandlerExecutionChain就是存放handler对象以及拦截器链的一个东西
 				HandlerExecutionChain handler = hm.getHandler(request);
 				if (handler != null) {
 					return handler;
